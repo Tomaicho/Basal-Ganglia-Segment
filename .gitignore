@@ -36,3 +36,6 @@ venv/
 *.swp
 *.bak
 *.old
+
+# Ignore files in tmp
+tmp/
