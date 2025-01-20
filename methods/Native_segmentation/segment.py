@@ -16,6 +16,7 @@ parser = argparse.ArgumentParser(
 
 parser.add_argument('-t1', required=True, help='Path to the T1-weighted MRI image of the subject.')
 parser.add_argument('-t2', required=True, help='Path to the T2-weighted MRI image of the subject.')
+parser.add_argument('-m', required=True, choices=['I', 'II'], help='Method to be used on the segmentation (I -> MNI, II -> native).')
 
 args = parser.parse_args()
 
