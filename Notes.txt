@@ -1,3 +1,8 @@
+Input:
+    - image paths -> send them to folder
+    - folder ??
+    - ask user to define nnunet paths -> import models
+
 Native:
     - skull strip T1 and T2
     (????) - if not registered: register
@@ -5,6 +10,7 @@ Native:
     - apply transformation of atlas to T1
     - crop following ROI
     - crop to model expected shape
+    - add images to nnunet input folder for inference
     - apply model
     - return segmentation in original image
 
@@ -14,6 +20,7 @@ MNI:
     - compute T1 registration to MNI
     - apply transformation to T1 and T2
     - crop to ROI shape
+    - add images to nnunet input folder for inference
     - apply model
     - return segmentation and images in MNI
     - apply inverse transform to segmentation

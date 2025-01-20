@@ -9,6 +9,8 @@ This file can also be imported as a module and contains the following functions:
 
 import os
 import subprocess
+import re
+import torchio as tio
 
 def skull_strip(input_image, T1):
     """Function to skull-strip an image using FreeSurfer's Synthstrip.
@@ -63,7 +65,7 @@ def register_images(fixed_image, moving_image):
     subprocess.run(cmd, shell=True)
 
 
-def apply_transform_to_image(input_image, transform):
+def apply_transform_to_image(input_image, transform, output_image):
     """Function to apply a transformation to an image using transformix.
 
     Parameters
@@ -72,6 +74,8 @@ def apply_transform_to_image(input_image, transform):
         Path to the input image.
     transform : str
         Path to the transformation file.
+    output_image : str
+        Path to save the output image.
 
     Returns
     -------
@@ -83,12 +87,22 @@ def apply_transform_to_image(input_image, transform):
     if not os.path.exists(transform):
         raise FileNotFoundError(f"Transform file {transform} not found.")
     # save the output in a folder in the tmp folder
-    output_image = os.path.join("tmp", "Atlas_ROI_in_native")
     cmd = f"transformix -in {input_image} -out {output_image} -tp {transform}"
     subprocess.run(cmd, shell=True)
 
 def change_parameters_file_for_labels(path_to_parameters_file_folder):
+    """"Function to change the Interpolation Order parameter of the elastix parameters file to 0 to make it aplicable to binary label images.
+
+    Parameters
+    ----------
+    path_to_parameters_file_folder : str
+        Path to the folder containing the elastix parameters file.
     
+    Returns
+    -------
+    None
+
+    """
     parameters_file = os.path.join(path_to_parameters_file_folder, 'TransformParameters.0.txt')
     with open(parameters_file, 'r') as param_file:
         params = param_file.read()
@@ -98,3 +112,39 @@ def change_parameters_file_for_labels(path_to_parameters_file_folder):
         new_parameters_file = os.path.join(path_to_parameters_file_folder, 'TransformParameters.0.for_labels.txt')
         with open(new_parameters_file, 'w') as param_file:
             param_file.write(params)
+
+def crop_and_preprocess_images(t1_ss_path, t2_ss_path, roi_mask_path, transform_path):
+    """Function to crop and preprocess the input T1 and T2 images using the transformed atlas ROI.
+
+    Parameters
+    ----------
+    t1_ss_path : str
+        Path to the skull-stripped T1-weighted image.
+    t2_ss_path : str
+        Path to the skull-stripped T2-weighted image.
+    roi_mask_path : str
+
+    """
+    # Define the transformations to apply to the images
+    transforms_preprocess = tio.Compose([
+        tio.ToCanonical(),
+        tio.Resample('t2', image_interpolation='bspline'),
+        tio.CropOrPad(mask_name='roi_mask'),
+        tio.HistogramStandardization('normalization_landmarks.pth'),
+        tio.CropOrPad((90, 80, 60)),
+    ])
+
+    # Define the tio.Subject object
+    subject = tio.Subject(
+        t1=tio.ScalarImage(t1_ss_path),
+        t2=tio.ScalarImage(t2_ss_path),
+        roi_mask=tio.LabelMap(roi_mask_path),
+    )
+
+    # Apply the preprocessing transformations to t1 and t2
+    preprocessed = transforms_preprocess(subject)
+
+    # Save the preprocessed images in the preprocessed folder in the tmp folder
+    preprocessed.t1.save('tmp/preprocessed/LOCALIZER_001_0000.nii.gz')
+    preprocessed.t2.save('tmp/preprocessed/LOCALIZER_001_0001.nii.gz')
+
