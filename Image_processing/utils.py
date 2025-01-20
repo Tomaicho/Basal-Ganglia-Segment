@@ -12,6 +12,8 @@ import subprocess
 import re
 import torchio as tio
 
+ROI_MNI = "data/templates/combined_ROI_MNI.nii.gz"
+
 def skull_strip(input_image, T1):
     """Function to skull-strip an image using FreeSurfer's Synthstrip.
 
@@ -39,7 +41,7 @@ def skull_strip(input_image, T1):
     subprocess.run(cmd, shell=True)
 
 
-def register_images(fixed_image, moving_image):
+def register_images(fixed_image, moving_image, output_dir):
     """Function to register two images using elastix.
 
     Parameters
@@ -48,6 +50,8 @@ def register_images(fixed_image, moving_image):
         Path to the fixed image.
     moving_image : str
         Path to the moving image.
+    output_dir : str
+        Path to save the output image.
 
     Returns
     -------
@@ -59,7 +63,6 @@ def register_images(fixed_image, moving_image):
     if not os.path.exists(moving_image):
         raise FileNotFoundError(f"Moving image {moving_image} not found.")
     # save the output in a folder in the tmp folder
-    output_dir = os.path.join("tmp", "MNI_to_t1_transform")
     os.makedirs(output_dir)
     cmd = f"elastix -f {fixed_image} -m {moving_image} -out {output_dir} -p parameters.txt"
     subprocess.run(cmd, shell=True)
@@ -113,8 +116,8 @@ def change_parameters_file_for_labels(path_to_parameters_file_folder):
         with open(new_parameters_file, 'w') as param_file:
             param_file.write(params)
 
-def crop_and_preprocess_images(t1_ss_path, t2_ss_path, roi_mask_path, transform_path):
-    """Function to crop and preprocess the input T1 and T2 images using the transformed atlas ROI.
+def crop_and_preprocess_images_method_II(t1_ss_path, t2_ss_path, roi_mask_path):
+    """Function to crop and preprocess the input T1 and T2 images using the transformed atlas ROI for method II input.
 
     Parameters
     ----------
@@ -123,6 +126,11 @@ def crop_and_preprocess_images(t1_ss_path, t2_ss_path, roi_mask_path, transform_
     t2_ss_path : str
         Path to the skull-stripped T2-weighted image.
     roi_mask_path : str
+        Path to the transformed atlas ROI mask.
+
+    Returns
+    -------
+    None
 
     """
     # Define the transformations to apply to the images
@@ -145,6 +153,47 @@ def crop_and_preprocess_images(t1_ss_path, t2_ss_path, roi_mask_path, transform_
     preprocessed = transforms_preprocess(subject)
 
     # Save the preprocessed images in the preprocessed folder in the tmp folder
-    preprocessed.t1.save('tmp/preprocessed/LOCALIZER_001_0000.nii.gz')
-    preprocessed.t2.save('tmp/preprocessed/LOCALIZER_001_0001.nii.gz')
+    os.makedirs(os.path.join('tmp', 'preprocessed_method_II'), exist_ok=True)
+    preprocessed.t1.save(os.path.join('tmp', 'preprocessed_method_II', 'LOCALIZER_001_0000.nii.gz'))
+    preprocessed.t2.save(os.path.join('tmp', 'preprocessed_method_II', 'LOCALIZER_001_0000.nii.gz'))
+
+
+def crop_and_preprocess_images_method_I(t1_ss_path, t2_ss_path):
+    """Function to crop and preprocess the input T1 and T2 images for method I input.
+
+    Parameters
+    ----------
+    t1_ss_path : str
+        Path to the skull-stripped T1-weighted image.
+    t2_ss_path : str
+        Path to the skull-stripped T2-weighted image.
+    roi_mask_path : str
+        Path to the transformed atlas ROI mask.
+
+    Returns
+    -------
+    None
+
+    """
+    # Define the transformations to apply to the images
+    transforms_preprocess = tio.Compose([
+        tio.CropOrPad(mask_name='roi_mask'),
+        tio.ZNormalization(),
+        tio.HistogramStandardization('normalization_landmarks.pth'),
+    ])
+
+    # Define the tio.Subject object
+    subject = tio.Subject(
+        t1=tio.ScalarImage(t1_ss_path),
+        t2=tio.ScalarImage(t2_ss_path),
+        roi_mask=tio.LabelMap(ROI_MNI),
+    )
+
+    # Apply the preprocessing transformations to t1 and t2
+    preprocessed = transforms_preprocess(subject)
+
+    # Save the preprocessed images in the preprocessed folder in the tmp folder
+    os.makedirs(os.path.join('tmp', 'preprocessed_method_I'), exist_ok=True)
+    preprocessed.t1.save(os.path.join('tmp', 'preprocessed_method_I', '0.5_MNI_001_0000.nii.gz'))
+    preprocessed.t2.save(os.path.join('tmp', 'preprocessed_method_I', '0.5_MNI_001_0001.nii.gz'))
 
