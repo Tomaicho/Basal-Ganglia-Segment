@@ -70,7 +70,7 @@ def register_images(fixed_image, moving_image, output_dir, parameters_file):
     subprocess.run(cmd, shell=True)
 
 
-def apply_transform_to_image(input_image, transform, output_image):
+def apply_transform_to_image(input_image, transform, output_dir):
     """Function to apply a transformation to an image using transformix.
 
     Parameters
@@ -80,7 +80,7 @@ def apply_transform_to_image(input_image, transform, output_image):
     transform : str
         Path to the transformation file.
     output_image : str
-        Path to save the output image.
+        Path to save the output dir.
 
     Returns
     -------
@@ -92,7 +92,7 @@ def apply_transform_to_image(input_image, transform, output_image):
     if not os.path.exists(transform):
         raise FileNotFoundError(f"Transform file {transform} not found.")
     # save the output in a folder in the tmp folder
-    cmd = f"transformix -in {input_image} -out {output_image} -tp {transform}"
+    cmd = f"transformix -in {input_image} -out {output_dir} -tp {transform}"
     subprocess.run(cmd, shell=True)
 
 def change_parameters_file_for_labels(path_to_parameters_file_folder):
