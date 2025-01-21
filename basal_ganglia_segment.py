@@ -23,6 +23,10 @@ method = args.m
 assert t1_image.endswith('.nii.gz'), "Input T1 image must be a .nii.gz file."
 assert t2_image.endswith('.nii.gz'), "Input T2 image must be a .nii.gz file."
 
+# Create the tmp folder if it does not exist
+if not os.path.exists("tmp"):
+    os.makedirs("tmp")
+
 if method == 'I':
     method_I_segment(t1_image, t2_image)
 elif method == 'II':

@@ -31,6 +31,10 @@ def method_II_segment(t1_image, t2_image):
     t1_ss_path = os.path.join("tmp", "t1_ss.nii.gz")
     t2_ss_path = os.path.join("tmp", "t2_ss.nii.gz")
 
+    # Create the MNI_to_t1_transform folder if it does not exist
+    if not os.path.exists(os.path.join("tmp", "MNI_to_t1_transform")):
+        os.makedirs(os.path.join("tmp", "MNI_to_t1_transform"))
+
     # Compute transformation of the MNI (data/templates/mni_icbm...) template to the skull-stripped T1 image
     register_images(fixed_image=t1_ss_path, moving_image=MNI_TEMPLATE, output_dir=os.path.join("tmp", "MNI_to_t1_transform"))
 
@@ -71,6 +75,10 @@ def method_I_segment(t1_image, t2_image):
 
     t1_ss_path = os.path.join("tmp", "t1_ss.nii.gz")
     t2_ss_path = os.path.join("tmp", "t2_ss.nii.gz")
+
+    # Create the t1_to_MNI_transform folder if it does not exist
+    if not os.path.exists(os.path.join("tmp", "t1_to_MNI_transform")):
+        os.makedirs(os.path.join("tmp", "t1_to_MNI_transform"))
 
     # Compute transformation of the skull-stripped T1 image to the MNI (data/templates/mni_icbm...) template
     register_images(fixed_image=MNI_TEMPLATE, moving_image=t1_ss_path, output_dir=os.path.join("tmp", "t1_to_MNI_transform"))

@@ -25,3 +25,15 @@ MNI:
     - return segmentation and images in MNI
     - apply inverse transform to segmentation
     - return segmentation in original image
+
+
+Install FreeSurfer:
+    - get correct release and follow instructions
+    - export FREESURFER_HOME=/data/home/tomaslima/Desktop/freesurfer
+    - source $FREESURFER_HOME/SetUpFreeSurfer.sh
+
+Elastix:
+    - download and unzip to folder
+    - export PATH=/data/home/tomaslima/Desktop/elastix/bin:$PATH
+    - export LD_LIBRARY_PATH=/data/home/tomaslima/Desktop/elastix/lib:$LD_LIBRARY_PATH
+    - chmod +x /data/home/tomaslima/Desktop/elastix/bin/elastix
