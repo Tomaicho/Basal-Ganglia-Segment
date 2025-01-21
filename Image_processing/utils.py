@@ -141,7 +141,7 @@ def crop_and_preprocess_images_method_II(t1_ss_path, t2_ss_path, roi_mask_path):
         tio.ToCanonical(),
         tio.Resample('t2', image_interpolation='bspline'),
         tio.CropOrPad(mask_name='roi_mask'),
-        tio.HistogramStandardization('normalization_landmarks.pth'),
+        tio.HistogramStandardization(landmarks_path),
         tio.CropOrPad((90, 80, 60)),
     ])
 
@@ -178,11 +178,12 @@ def crop_and_preprocess_images_method_I(t1_ss_path, t2_ss_path):
     None
 
     """
+    landmarks_path = 'data/normalization_landmarks/method_I/normalization_landmarks.pth'
     # Define the transformations to apply to the images
     transforms_preprocess = tio.Compose([
         tio.CropOrPad(mask_name='roi_mask'),
         tio.ZNormalization(),
-        tio.HistogramStandardization('normalization_landmarks.pth'),
+        tio.HistogramStandardization(landmarks_path),
     ])
 
     # Define the tio.Subject object
