@@ -49,7 +49,7 @@ def method_II_segment(t1_image, t2_image):
     print("\nROI mask transformed to native space.\n")
 
     # Preprocess and use the transformed atlas ROI to crop T1 and T2 images
-    roi_mask_path = os.path.join("tmp", "MNI_to_t1_transform", "roi_mask.nii.gz")
+    roi_mask_path = os.path.join("tmp", "MNI_to_t1_transform", "result.nii.gz")
     crop_and_preprocess_images_method_II(t1_ss_path, t2_ss_path, roi_mask_path)
     print("\nImages preprocessed and cropped using the transformed ROI mask.\n")
 
