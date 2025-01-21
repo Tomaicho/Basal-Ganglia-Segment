@@ -6,7 +6,7 @@ Makes use of the functions in the utils.py file to pre-process the input images,
 import os
 from Image_processing.utils import *
 
-MNI_TEMPLATE = "data/templates/mni_icbm152_t1_tal_nlin_asym_09c.nii.gz"
+MNI_TEMPLATE = "data/templates/mni_icbm152_t1_tal_nlin_asym_09c_masked.nii.gz"
 ATLAS_ROI = "data/templates/ROI_CIT168_atlas.nii.gz"
 
 def method_II_segment(t1_image, t2_image):
