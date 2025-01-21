@@ -88,19 +88,24 @@ def method_I_segment(t1_image, t2_image):
     # Create the t1_to_MNI_transform folder if it does not exist
     if not os.path.exists(os.path.join("tmp", "t1_to_MNI_transform")):
         os.makedirs(os.path.join("tmp", "t1_to_MNI_transform"))
+    # Create the t2_to_MNI_transform folder if it does not exist
+    if not os.path.exists(os.path.join("tmp", "t2_to_MNI_transform")):
+        os.makedirs(os.path.join("tmp", "t2_to_MNI_transform"))
 
     # Compute transformation of the skull-stripped T1 image to the MNI (data/templates/mni_icbm...) template
     register_images(fixed_image=MNI_TEMPLATE, moving_image=t1_ss_path, output_dir=os.path.join("tmp", "t1_to_MNI_transform"), parameters_file="data/templates/Par0064_affine.txt")
 
     # Apply the transformation stored in tmp/t1_to_MNI_transform to the T1_ss and T2_ss images
     transform_path = os.path.join('tmp', 't1_to_MNI_transform', 'TransformParameters.0.txt')
-    apply_transform_to_image(input_image=t1_ss_path, transform=transform_path, output_image=os.path.join("tmp", "t1_ss_MNI.nii.gz"))
-    apply_transform_to_image(input_image=t2_ss_path, transform=transform_path, output_image=os.path.join("tmp", "t2_ss_MNI.nii.gz"))
+    apply_transform_to_image(input_image=t1_ss_path, transform=transform_path, output_dir=os.path.join("tmp", 't1_to_MNI_transform'))
+    apply_transform_to_image(input_image=t2_ss_path, transform=transform_path, output_dir=os.path.join("tmp", 't2_to_MNI_transform'))
 
     print("\nTransformation of native to MNI space computed.\n")
 
     # Preprocess T1 and T2 images
-    crop_and_preprocess_images_method_I(t1_ss_path, t2_ss_path)
+    t1_in_MNI = os.path.join("tmp", "t1_to_MNI_transform", "result.nii.gz")
+    t2_in_MNI = os.path.join("tmp", "t2_to_MNI_transform", "result.nii.gz")
+    crop_and_preprocess_images_method_I(t1_in_MNI, t2_in_MNI)
 
     print("\nImages preprocessed and cropped.\n")
 
