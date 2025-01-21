@@ -135,6 +135,7 @@ def crop_and_preprocess_images_method_II(t1_ss_path, t2_ss_path, roi_mask_path):
     None
 
     """
+    landmarks_path = 'data/normalization_landmarks/method_II/normalization_landmarks.pth'
     # Define the transformations to apply to the images
     transforms_preprocess = tio.Compose([
         tio.ToCanonical(),
