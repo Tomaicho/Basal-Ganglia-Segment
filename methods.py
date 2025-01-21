@@ -37,16 +37,20 @@ def method_II_segment(t1_image, t2_image):
 
     # Compute transformation of the MNI (data/templates/mni_icbm...) template to the skull-stripped T1 image
     register_images(fixed_image=t1_ss_path, moving_image=MNI_TEMPLATE, output_dir=os.path.join("tmp", "MNI_to_t1_transform"), parameters_file="data/templates/Par0064_affine.txt")
+    print("\nTransformation of MNI to native space computed.\n")
 
     parameters_file_folder = os.path.join('tmp', 'MNI_to_t1_transform')
     change_parameters_file_for_labels(parameters_file_folder)
+    print("\nParameters file modified to be applicable for labels.\n")
 
     # Apply the transformation stored in tmp/MNI_to_t1_transform to the ROI atlas
     roi_mask_path = os.path.join("tmp", "MNI_to_t1_transform", "roi_mask.nii.gz")
     apply_transform_to_image(input_image=ATLAS_ROI, transform=os.path.join('tmp', 'MNI_to_t1_transform', 'TransformParameters.0.for_labels.txt'), output_image=roi_mask_path)
+    print("\nROI mask transformed to native space.\n")
 
     # Preprocess and use the transformed atlas ROI to crop T1 and T2 images
     crop_and_preprocess_images_method_II(t1_ss_path, t2_ss_path, roi_mask_path)
+    print("\nImages preprocessed and cropped using the transformed ROI mask.\n")
 
     # Perform the segmentation of the images stored in the folder preprocessed folder
     # Output is stored in /results
