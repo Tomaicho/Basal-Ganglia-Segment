@@ -41,7 +41,7 @@ def skull_strip(input_image, t1):
     subprocess.run(cmd, shell=True)
 
 
-def register_images(fixed_image, moving_image, output_dir):
+def register_images(fixed_image, moving_image, output_dir, parameters_file):
     """Function to register two images using elastix.
 
     Parameters
@@ -52,6 +52,8 @@ def register_images(fixed_image, moving_image, output_dir):
         Path to the moving image.
     output_dir : str
         Path to save the output image.
+    parameters_file : str
+        Path to the elastix parameters file.
 
     Returns
     -------
@@ -63,8 +65,8 @@ def register_images(fixed_image, moving_image, output_dir):
     if not os.path.exists(moving_image):
         raise FileNotFoundError(f"Moving image {moving_image} not found.")
     # save the output in a folder in the tmp folder
-    os.makedirs(output_dir)
-    cmd = f"elastix -f {fixed_image} -m {moving_image} -out {output_dir} -p parameters.txt"
+    os.makedirs(output_dir, exist_ok=True)
+    cmd = f"elastix -f {fixed_image} -m {moving_image} -out {output_dir} -p {parameters_file}"
     subprocess.run(cmd, shell=True)
 
 
