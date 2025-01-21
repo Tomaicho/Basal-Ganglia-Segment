@@ -14,7 +14,7 @@ import torchio as tio
 
 ROI_MNI = "data/templates/combined_ROI_MNI.nii.gz"
 
-def skull_strip(input_image, T1):
+def skull_strip(input_image, t1):
     """Function to skull-strip an image using FreeSurfer's Synthstrip.
 
     Parameters
@@ -33,7 +33,7 @@ def skull_strip(input_image, T1):
     if not os.path.exists(input_image):
         raise FileNotFoundError(f"Input image {input_image} not found.")
     # save the output image in the tmp folder
-    if T1:
+    if t1:
         output_image = os.path.join("tmp", "t1_ss.nii.gz")
     else:
         output_image = os.path.join("tmp", "t2_ss.nii.gz")
