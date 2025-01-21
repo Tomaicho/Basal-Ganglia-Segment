@@ -34,4 +34,4 @@
 (Transform "AffineTransform")
 (UseDirectionCosines "true")
 (WriteIterationInfo "false")
-(WriteResultImage "true")
+(WriteResultImage "false")
