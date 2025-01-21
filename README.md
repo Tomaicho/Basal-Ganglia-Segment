@@ -13,3 +13,4 @@ Synthstrip - FreeSurfer
 Elastix
 Torch
 Torchio
+nnUNetv2

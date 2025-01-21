@@ -31,6 +31,8 @@ def method_II_segment(t1_image, t2_image):
     t1_ss_path = os.path.join("tmp", "t1_ss.nii.gz")
     t2_ss_path = os.path.join("tmp", "t2_ss.nii.gz")
 
+    print("\nSkull-stripping completed.\n")
+
     # Create the MNI_to_t1_transform folder if it does not exist
     if not os.path.exists(os.path.join("tmp", "MNI_to_t1_transform")):
         os.makedirs(os.path.join("tmp", "MNI_to_t1_transform"))
@@ -81,23 +83,36 @@ def method_I_segment(t1_image, t2_image):
     t1_ss_path = os.path.join("tmp", "t1_ss.nii.gz")
     t2_ss_path = os.path.join("tmp", "t2_ss.nii.gz")
 
+    print("\nSkull-stripping completed.\n")
+
     # Create the t1_to_MNI_transform folder if it does not exist
     if not os.path.exists(os.path.join("tmp", "t1_to_MNI_transform")):
         os.makedirs(os.path.join("tmp", "t1_to_MNI_transform"))
 
     # Compute transformation of the skull-stripped T1 image to the MNI (data/templates/mni_icbm...) template
-    register_images(fixed_image=MNI_TEMPLATE, moving_image=t1_ss_path, output_dir=os.path.join("tmp", "t1_to_MNI_transform"))
+    register_images(fixed_image=MNI_TEMPLATE, moving_image=t1_ss_path, output_dir=os.path.join("tmp", "t1_to_MNI_transform"), parameters_file="data/templates/Par0064_affine.txt")
 
     # Apply the transformation stored in tmp/t1_to_MNI_transform to the T1_ss and T2_ss images
     transform_path = os.path.join('tmp', 't1_to_MNI_transform', 'TransformParameters.0.txt')
     apply_transform_to_image(input_image=t1_ss_path, transform=transform_path, output_image=os.path.join("tmp", "t1_ss_MNI.nii.gz"))
     apply_transform_to_image(input_image=t2_ss_path, transform=transform_path, output_image=os.path.join("tmp", "t2_ss_MNI.nii.gz"))
 
+    print("\nTransformation of native to MNI space computed.\n")
+
     # Preprocess T1 and T2 images
     crop_and_preprocess_images_method_I(t1_ss_path, t2_ss_path)
+
+    print("\nImages preprocessed and cropped.\n")
 
     # Perform the segmentation of the images stored in the folder preprocessed folder
     # Output is stored in /results
     os.system('nnUNetv2_predict -i tmp/preprocessed_method_I/ -o /results/ -d 003 -c 3d_fullres -f 5 --save_probabilities -tr nnUNetTrainer_100epochs_NoMirroring -p nnUNetResEncUNetLPlans')
+
+    # Compute inverse transformation from MNI to native space
+
+
+    # Apply the inverse transformation to the output masks
+
+    
     
     print("Segmentation completed and stored in /results folder as 0.5_MNI_001.nii.gz")

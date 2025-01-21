@@ -158,7 +158,7 @@ def crop_and_preprocess_images_method_II(t1_ss_path, t2_ss_path, roi_mask_path):
     # Save the preprocessed images in the preprocessed folder in the tmp folder
     os.makedirs(os.path.join('tmp', 'preprocessed_method_II'), exist_ok=True)
     preprocessed.t1.save(os.path.join('tmp', 'preprocessed_method_II', 'LOCALIZER_001_0000.nii.gz'))
-    preprocessed.t2.save(os.path.join('tmp', 'preprocessed_method_II', 'LOCALIZER_001_0000.nii.gz'))
+    preprocessed.t2.save(os.path.join('tmp', 'preprocessed_method_II', 'LOCALIZER_001_0001.nii.gz'))
 
 
 def crop_and_preprocess_images_method_I(t1_ss_path, t2_ss_path):
