@@ -25,8 +25,8 @@ def method_II_segment(t1_image, t2_image):
 
     """
     # Skull-strip the input images
-    #skull_strip(t1_image, t1=True)
-    #skull_strip(t2_image, t1=False)
+    skull_strip(t1_image, t1=True)
+    skull_strip(t2_image, t1=False)
 
     t1_ss_path = os.path.join("tmp", "t1_ss.nii.gz")
     t2_ss_path = os.path.join("tmp", "t2_ss.nii.gz")
@@ -38,11 +38,11 @@ def method_II_segment(t1_image, t2_image):
         os.makedirs(os.path.join("tmp", "MNI_to_t1_transform"))
 
     # Compute transformation of the MNI (data/templates/mni_icbm...) template to the skull-stripped T1 image
-    #register_images(fixed_image=t1_ss_path, moving_image=MNI_TEMPLATE, output_dir=os.path.join("tmp", "MNI_to_t1_transform"), parameters_file="data/templates/Par0064_affine.txt")
+    register_images(fixed_image=t1_ss_path, moving_image=MNI_TEMPLATE, output_dir=os.path.join("tmp", "MNI_to_t1_transform"), parameters_file="data/templates/Par0064_affine.txt")
     print("\nTransformation of MNI to native space computed.\n")
 
     parameters_file_folder = os.path.join('tmp', 'MNI_to_t1_transform')
-    #change_parameters_file_for_labels(parameters_file_folder)
+    change_parameters_file_for_labels(parameters_file_folder)
     print("\nParameters file modified to be applicable for labels.\n")
 
     # Apply the transformation stored in tmp/MNI_to_t1_transform to the ROI atlas
