@@ -11,6 +11,7 @@ import os
 import subprocess
 import re
 import torchio as tio
+import SimpleITK as sitk
 
 ROI_MNI = "data/templates/combined_ROI_MNI.nii.gz"
 
@@ -200,4 +201,47 @@ def crop_and_preprocess_images_method_I(t1_ss_path, t2_ss_path):
     os.makedirs(os.path.join('tmp', 'preprocessed_method_I'), exist_ok=True)
     preprocessed.t1.save(os.path.join('tmp', 'preprocessed_method_I', '0.5_MNI_001_0000.nii.gz'))
     preprocessed.t2.save(os.path.join('tmp', 'preprocessed_method_I', '0.5_MNI_001_0001.nii.gz'))
+
+
+def get_image_metadata(moving_image_path):
+    moving_image = sitk.ReadImage(moving_image_path)
+    
+    # Extract metadata
+    size = moving_image.GetSize()  # Image dimensions
+    spacing = moving_image.GetSpacing()  # Voxel spacing
+    origin = moving_image.GetOrigin()  # Origin
+    direction = moving_image.GetDirection()  # Direction
+
+    return size, spacing, origin, direction
+
+
+def compute_inverse_transform(t1_original_file_path):
+
+    
+    # Define the first MNI -> T1 transformation
+    size, spacing, origin, direction = get_image_metadata(t1_original_file_path)
+
+    size = " ".join(map(str, size))
+    spacing = " ".join(map(str, spacing))
+    origin = " ".join(map(str, origin))
+    direction = " ".join(map(str, direction))
+    
+    tranform_param_path = f"tmp/t1_to_MNI_transform/TransformParameters.0.txt"
+    # Open the transform parameters file to edit the BSPline variable from 3 to 0
+    with open(tranform_param_path, 'r') as param_file:
+        params = param_file.read()
+
+    params = re.sub('(FinalBSplineInterpolationOrder 3)', 'FinalBSplineInterpolationOrder 0', params)
+    params = re.sub('\(InitialTransformParametersFileName .*\)', '(InitialTransformParametersFileName "NoInitialTransform")', params)
+    params = re.sub('\(Size .*\)', f'(Size {size.strip("()").strip(",")})', params)
+    params = re.sub('\(Spacing .*\)', f'(Spacing {spacing.strip("()").strip(",")})', params)
+    params = re.sub('\(Origin .*\)', f'(Origin {origin.strip("()").strip(",")})', params)
+    params = re.sub('\(Direction .*\)', f'(Direction {direction.strip("()").strip(",")})', params)
+    
+    new_params_file_path =  f"tmp/invert_t1_to_MNI_transform/TransformParameters.0.labels_MNI_to_T1.txt"
+
+    # Write the new Parameters file
+    with open(new_params_file_path, 'w') as param_file:
+        param_file.write(params)
+
 

@@ -115,10 +115,14 @@ def method_I_segment(t1_image, t2_image):
     os.system('nnUNetv2_predict -i tmp/preprocessed_method_I/ -o /results/ -d 003 -c 3d_fullres -f 5 --save_probabilities -tr nnUNetTrainer_100epochs_NoMirroring -p nnUNetResEncUNetLPlans')
 
     # Compute inverse transformation from MNI to native space
+    register_images(fixed_image=MNI_TEMPLATE, moving_image=MNI_TEMPLATE, output_dir=os.path.join("tmp", "invert_t1_to_MNI_transform"), parameters_file="data/templates/Par0064_affine_invert.txt")
+    print("\nInverse transformation of MNI to native space computed.\n")
 
-
+    # Compute the inverse transformation to the output masks
+    compute_inverse_transform(t1_original_file_path=t1_image)
     # Apply the inverse transformation to the output masks
-
+    apply_transform_to_image(input_image=os.path.join("results", "0.5_MNI_001.nii.gz"), transform=os.path.join('tmp', 'invert_t1_to_MNI_transform', 'TransformParameters.0.labels_MNI_to_T1.txt'), output_dir=os.path.join('tmp', 'invert_t1_to_MNI_transform'))
     
-    
-    print("Segmentation completed and stored in /results folder as 0.5_MNI_001.nii.gz")
+    # Move the tmp/invert_t1_to_MNI_transform/result.nii.gz file to the results folder as 0.5_MNI_001.nii.gz
+    os.rename(os.path.join('tmp', 'invert_t1_to_MNI_transform', 'result.nii.gz'), os.path.join('results', '0.5_MNI_001.nii.gz'))
+    print("Segmentation completed and stored in results folder as 0.5_MNI_001.nii.gz")
