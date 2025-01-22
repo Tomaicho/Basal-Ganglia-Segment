@@ -57,6 +57,7 @@ def method_II_segment(t1_image, t2_image):
 
     # Perform the segmentation of the images stored in the folder preprocessed folder
     # Output is stored in /results
+    print('\nnnUNetv2_predict -i tmp/preprocessed_method_II/ -o /results/ -d 002 -c 3d_fullres -f 5 --save_probabilities -tr nnUNetTrainer_250epochs_NoMirroring -p nnUNetResEncUNetLPlans\n')
     os.system('nnUNetv2_predict -i tmp/preprocessed_method_II/ -o /results/ -d 002 -c 3d_fullres -f 5 --save_probabilities -tr nnUNetTrainer_250epochs_NoMirroring -p nnUNetResEncUNetLPlans')
 
     print("Segmentation completed and stored in /results folder as LOCALIZER_001.nii.gz")
