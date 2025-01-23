@@ -115,7 +115,7 @@ def method_I_segment(t1_image, t2_image):
     os.system('nnUNetv2_predict -i tmp/preprocessed_method_I/ -o results/ -d 003 -c 3d_fullres -f 5 --save_probabilities -tr nnUNetTrainer_100epochs_NoMirroring -p nnUNetResEncUNetLPlans')
 
     # Compute inverse transformation from MNI to native space
-    register_images(fixed_image=MNI_TEMPLATE, moving_image=MNI_TEMPLATE, output_dir=os.path.join("tmp", "invert_t1_to_MNI_transform"), parameters_file="data/templates/Par0064_affine_invert.txt")
+    register_images(fixed_image=MNI_TEMPLATE, moving_image=MNI_TEMPLATE, output_dir=os.path.join("tmp", "invert_t1_to_MNI_transform"), parameters_file="data/templates/Par0064_affine_invert.txt", invert=True)
     print("\nInverse transformation of MNI to native space computed.\n")
 
     # Compute the inverse transformation to the output masks

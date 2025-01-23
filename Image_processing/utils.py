@@ -42,7 +42,7 @@ def skull_strip(input_image, t1):
     subprocess.run(cmd, shell=True)
 
 
-def register_images(fixed_image, moving_image, output_dir, parameters_file):
+def register_images(fixed_image, moving_image, output_dir, parameters_file, invert=False):
     """Function to register two images using elastix.
 
     Parameters
@@ -55,6 +55,8 @@ def register_images(fixed_image, moving_image, output_dir, parameters_file):
         Path to save the output image.
     parameters_file : str
         Path to the elastix parameters file.
+    invert : bool
+        Whether the transformation to be computed is an inversion.
 
     Returns
     -------
@@ -65,9 +67,13 @@ def register_images(fixed_image, moving_image, output_dir, parameters_file):
         raise FileNotFoundError(f"Fixed image {fixed_image} not found.")
     if not os.path.exists(moving_image):
         raise FileNotFoundError(f"Moving image {moving_image} not found.")
+    
     # save the output in a folder in the tmp folder
     os.makedirs(output_dir, exist_ok=True)
-    cmd = f"elastix -f {fixed_image} -m {moving_image} -out {output_dir} -p {parameters_file}"
+    if invert:
+        cmd = f"elastix -f {fixed_image} -m {moving_image} -out {output_dir} -p {parameters_file} -t0 {os.path.join('t1_to_MNI_transform', 'TransformParameters.0.txt')}"
+    else:
+        cmd = f"elastix -f {fixed_image} -m {moving_image} -out {output_dir} -p {parameters_file}"
     subprocess.run(cmd, shell=True)
 
 
