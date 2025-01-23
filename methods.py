@@ -60,7 +60,9 @@ def method_II_segment(t1_image, t2_image):
     print('\nnnUNetv2_predict -i tmp/preprocessed_method_II/ -o results/ -d 002 -c 3d_fullres -f 5 --save_probabilities -tr nnUNetTrainer_250epochs_NoMirroring -p nnUNetResEncUNetLPlans\n')
     os.system('nnUNetv2_predict -i tmp/preprocessed_method_II/ -o results/ -d 002 -c 3d_fullres -f 5 --save_probabilities -tr nnUNetTrainer_250epochs_NoMirroring -p nnUNetResEncUNetLPlans')
 
-    print("Segmentation completed and stored in /results folder as LOCALIZER_001.nii.gz")
+    os.rename(os.path.join('results', 'LOCALIZER_001.nii.gz'), os.path.join('results', 'method_II_output_in_native.nii.gz'))
+    print("Segmentation completed and stored in results/ folder as method_II_output_in_native.nii.gz")
+
 
 def method_I_segment(t1_image, t2_image):
     """Performs the segmentation of the STN, RN and SN of a subject using the method I.
@@ -124,5 +126,6 @@ def method_I_segment(t1_image, t2_image):
     apply_transform_to_image(input_image=os.path.join("results", "0.5_MNI_001.nii.gz"), transform=os.path.join('tmp', 'invert_t1_to_MNI_transform', 'TransformParameters.0.labels_MNI_to_T1.txt'), output_dir=os.path.join('tmp', 'invert_t1_to_MNI_transform'))
     
     # Move the tmp/invert_t1_to_MNI_transform/result.nii.gz file to the results folder as 0.5_MNI_001.nii.gz
-    os.rename(os.path.join('tmp', 'invert_t1_to_MNI_transform', 'result.nii.gz'), os.path.join('results', '0.5_MNI_001_native.nii.gz'))
-    print("Segmentation completed and stored in results folder as 0.5_MNI_001.nii.gz")
+    os.rename(os.path.join('tmp', 'invert_t1_to_MNI_transform', 'result.nii.gz'), os.path.join('results', 'method_I_output_in_native.nii.gz'))
+    os.rename(os.path.join('results', '0.5_MNI_001.nii.gz'), os.path.join('results', 'method_I_output_in_MNI.nii.gz'))
+    print("Segmentation completed and stored in results/ folder as method_I_output_in_native.nii.gz")

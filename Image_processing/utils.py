@@ -71,7 +71,7 @@ def register_images(fixed_image, moving_image, output_dir, parameters_file, inve
     # save the output in a folder in the tmp folder
     os.makedirs(output_dir, exist_ok=True)
     if invert:
-        cmd = f"elastix -f {fixed_image} -m {moving_image} -out {output_dir} -p {parameters_file} -t0 {os.path.join('t1_to_MNI_transform', 'TransformParameters.0.txt')}"
+        cmd = f"elastix -f {fixed_image} -m {moving_image} -out {output_dir} -p {parameters_file} -t0 {os.path.join('tmp', 't1_to_MNI_transform', 'TransformParameters.0.txt')}"
     else:
         cmd = f"elastix -f {fixed_image} -m {moving_image} -out {output_dir} -p {parameters_file}"
     subprocess.run(cmd, shell=True)
@@ -224,7 +224,7 @@ def get_image_metadata(moving_image_path):
 def compute_inverse_transform(t1_original_file_path):
 
     
-    # Define the first MNI -> T1 transformation
+    # Define the MNI -> T1 transformation
     size, spacing, origin, direction = get_image_metadata(t1_original_file_path)
 
     size = " ".join(map(str, size))
@@ -233,7 +233,7 @@ def compute_inverse_transform(t1_original_file_path):
     direction = " ".join(map(str, direction))
     
     tranform_param_path = f"tmp/invert_t1_to_MNI_transform/TransformParameters.0.txt"
-    # Open the transform parameters file to edit the BSPline variable from 3 to 0
+    # Edit the transform parameters file
     with open(tranform_param_path, 'r') as param_file:
         params = param_file.read()
 
