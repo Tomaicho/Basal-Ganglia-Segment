@@ -232,7 +232,7 @@ def compute_inverse_transform(t1_original_file_path):
     origin = " ".join(map(str, origin))
     direction = " ".join(map(str, direction))
     
-    tranform_param_path = f"tmp/t1_to_MNI_transform/TransformParameters.0.txt"
+    tranform_param_path = f"tmp/invert_t1_to_MNI_transform/TransformParameters.0.txt"
     # Open the transform parameters file to edit the BSPline variable from 3 to 0
     with open(tranform_param_path, 'r') as param_file:
         params = param_file.read()
