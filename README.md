@@ -6,14 +6,15 @@ python basal_ganglia_segment.py -t1 path/to/t1/image.nii.gz -t2 path/to/t2/image
 
 ## Dependencies
 ### Pip installations:
-    -Torch
-    -Torchio
-    -nnUNetv2
-    -SimpleITK
+    - Torch
+    - Torchio
+    - nnUNetv2
+    - SimpleITK
 
 ### Downloadable packages:
-    -Synthstrip - FreeSurfer
-    -Elastix
+    - Synthstrip 
+    - FreeSurfer
+    - Elastix
 
 ### Installation Guidelines
 1. Create virtual environment.
