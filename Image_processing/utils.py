@@ -142,13 +142,17 @@ def crop_and_preprocess_images_method_II(t1_ss_path, t2_ss_path, roi_mask_path):
     None
 
     """
-    landmarks_path = 'data/normalization_landmarks/method_II/normalization_landmarks.pth'
+    # Provide the paths to the trained histogram landmarks
+    landmarks = {
+        't1': 'data/normalization_landmarks/method_II/t1_histogram.npy',
+        't2': 'data/normalization_landmarks/method_II/t2_histogram.npy',
+    }
     # Define the transformations to apply to the images
     transforms_preprocess = tio.Compose([
         tio.ToCanonical(),
         tio.Resample('t2', image_interpolation='bspline'),
         tio.CropOrPad(mask_name='roi_mask'),
-        tio.HistogramStandardization(landmarks_path),
+        tio.HistogramStandardization(landmarks),
         tio.CropOrPad((90, 80, 60)),
     ])
 
@@ -185,12 +189,16 @@ def crop_and_preprocess_images_method_I(t1_ss_path, t2_ss_path):
     None
 
     """
-    landmarks_path = 'data/normalization_landmarks/method_I/normalization_landmarks.pth'
+    # Provide the paths to the trained histogram landmarks
+    landmarks = {
+        't1': 'data/normalization_landmarks/method_I/t1_histogram.npy',
+        't2': 'data/normalization_landmarks/method_I/t2_histogram.npy',
+    }
     # Define the transformations to apply to the images
     transforms_preprocess = tio.Compose([
         tio.CropOrPad(mask_name='roi_mask'),
         tio.ZNormalization(),
-        tio.HistogramStandardization(landmarks_path),
+        tio.HistogramStandardization(landmarks),
     ])
 
     # Define the tio.Subject object
