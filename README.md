@@ -3,11 +3,11 @@ A repository containing two automatic segmentation methods of basal ganglia nucl
 
 Method I performs the segmentation by relying on the MNI152 brain template to spatially normalize the images. The segmentation is performed in the template space, and the output masks are transformed back to the native space.
 
-![alt text](https://github.com/Tomaicho/Basal-Gangia-Segment/blob/main/documentation/Method_I_pipeline.png?raw=true)
+![alt text](https://github.com/Tomaicho/Basal-Ganglia-Segment/blob/main/documentation/Method_II_pipeline.png?raw=true)
 
 Method II performs the segmentation directly on the native space of the image. For this, the CIT168 atlas is used to create a region of interest in every new subject.
 
-![alt text](https://github.com/Tomaicho/Basal-Gangia-Segment/blob/main/documentation/Method_II_pipeline.png?raw=true)
+![alt text](https://github.com/Tomaicho/Basal-Ganglia-Segment/blob/main/documentation/Method_II_pipeline.png?raw=true)
 
 ## Usage
 python basal_ganglia_segment.py -t1 path/to/t1/image.nii.gz -t2 path/to/t2/image.nii.gz -m [I, II]
