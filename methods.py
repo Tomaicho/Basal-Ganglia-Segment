@@ -124,5 +124,5 @@ def method_I_segment(t1_image, t2_image):
     apply_transform_to_image(input_image=os.path.join("results", "0.5_MNI_001.nii.gz"), transform=os.path.join('tmp', 'invert_t1_to_MNI_transform', 'TransformParameters.0.labels_MNI_to_T1.txt'), output_dir=os.path.join('tmp', 'invert_t1_to_MNI_transform'))
     
     # Move the tmp/invert_t1_to_MNI_transform/result.nii.gz file to the results folder as 0.5_MNI_001.nii.gz
-    os.rename(os.path.join('tmp', 'invert_t1_to_MNI_transform', 'result.nii.gz'), os.path.join('results', '0.5_MNI_001.nii.gz'))
+    os.rename(os.path.join('tmp', 'invert_t1_to_MNI_transform', 'result.nii.gz'), os.path.join('results', '0.5_MNI_001_native.nii.gz'))
     print("Segmentation completed and stored in results folder as 0.5_MNI_001.nii.gz")
