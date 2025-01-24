@@ -1,17 +1,19 @@
 # Basal-Ganglia-Segment
 A repository containing two automatic segmentation methods of basal ganglia nuclei in MRI data. The methods trained for 7T and 3T field intensities are described in [.........] and perform segmentation of the Subthalamic Nucleus (STN), Substantia Nigra (SN) and Red Nucleus (RN).
 
-Method I performs the segmentation by relying on the MNI152 brain template to spatially normalize the images. The segmentation is performed in the template space, and the output masks are transformed back to the native space.
+**Method I** performs the segmentation by relying on the MNI152 brain template to spatially normalize the images. The segmentation is performed in the template space, and the output masks are transformed back to the native space.
 
 ![alt text](https://github.com/Tomaicho/Basal-Ganglia-Segment/blob/main/documentation/Method_I_pipeline.png?raw=true)
 
-Method II performs the segmentation directly on the native space of the image. For this, the CIT168 atlas is used to create a region of interest in every new subject.
+**Method II** performs the segmentation directly on the native space of the image. For this, the CIT168 atlas is used to create a region of interest in every new subject.
 
 ![alt text](https://github.com/Tomaicho/Basal-Ganglia-Segment/blob/main/documentation/Method_II_pipeline.png?raw=true)
 
 ## Usage
 Open a terminal in this project folder and run the following command:
+
 ```$ python basal_ganglia_segment.py -t1 path/to/t1/image.nii.gz -t2 path/to/t2/image.nii.gz -m [I, II]```
+
 where the -t1 and -t2 arguments must be the absolute paths to the T1 and T2 images, respectively, and -m must be the method selected for the segmentation task, either I or II.
 
 ## Dependencies
