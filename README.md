@@ -58,5 +58,7 @@ where the -t1 and -t2 arguments must be the absolute paths to the T1 and T2 imag
 ## References
 
 [1] Brett, Matthew, Ingrid S. Johnsrude, and Adrian M. Owen. "The problem of functional localization in the human brain." Nature reviews neuroscience 3.3 (2002): 243-249.
+
 [2] Pauli, Wolfgang M., Amanda N. Nili, and J. Michael Tyszka. "A high-resolution probabilistic in vivo atlas of human subcortical brain nuclei." Scientific data 5.1 (2018): 1-13.
+
 [3] Klein, Stefan, et al. "Elastix: a toolbox for intensity-based medical image registration." IEEE transactions on medical imaging 29.1 (2009): 196-205.
