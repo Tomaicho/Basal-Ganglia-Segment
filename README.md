@@ -10,7 +10,9 @@ Method II performs the segmentation directly on the native space of the image. F
 ![alt text](https://github.com/Tomaicho/Basal-Ganglia-Segment/blob/main/documentation/Method_II_pipeline.png?raw=true)
 
 ## Usage
-python basal_ganglia_segment.py -t1 path/to/t1/image.nii.gz -t2 path/to/t2/image.nii.gz -m [I, II]
+Open a terminal in this project folder and run the following command:
+```$ python basal_ganglia_segment.py -t1 path/to/t1/image.nii.gz -t2 path/to/t2/image.nii.gz -m [I, II]```
+where the -t1 and -t2 arguments must be the absolute paths to the T1 and T2 images, respectively, and -m must be the method selected for the segmentation task, either I or II.
 
 ## Dependencies
 ### Pip installations:
@@ -50,3 +52,9 @@ python basal_ganglia_segment.py -t1 path/to/t1/image.nii.gz -t2 path/to/t2/image
     $ python install_model.py /path/to/downloaded/models/folder/method_I.zip
     $ python install_model.py /path/to/downloaded/models/folder/method_II.zip
     ```
+
+## References
+
+[1] Brett, Matthew, Ingrid S. Johnsrude, and Adrian M. Owen. "The problem of functional localization in the human brain." Nature reviews neuroscience 3.3 (2002): 243-249.
+[2] Pauli, Wolfgang M., Amanda N. Nili, and J. Michael Tyszka. "A high-resolution probabilistic in vivo atlas of human subcortical brain nuclei." Scientific data 5.1 (2018): 1-13.
+[3] Klein, Stefan, et al. "Elastix: a toolbox for intensity-based medical image registration." IEEE transactions on medical imaging 29.1 (2009): 196-205.
