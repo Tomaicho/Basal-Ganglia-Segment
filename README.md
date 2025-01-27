@@ -24,33 +24,27 @@ The segmentation results are stored in the results/ folder as **method_I_output_
     - Torchio
     - nnUNetv2
     - SimpleITK
+    - nipreps-synthstrip
 
 ### Downloadable packages:
-    - FreeSurfer
     - Elastix
 
 ### Installation Guidelines
 1. Create virtual environment.
 2. Install the pip dependencies.
-3. Download correct FreeSurfer release to a specified **folder** from https://surfer.nmr.mgh.harvard.edu/fswiki/rel7downloads and follow the Install and Setup guidelines.
+3. Download elastix from https://github.com/SuperElastix/elastix/releases/tag/5.2.0 and unzip to a specified folder.
 4. Run the following bash commands:
-    ```
-    $ export FREESURFER_HOME=/path/to/folder/freesurfer
-    $ source $FREESURFER_HOME/SetUpFreeSurfer.sh
-    ```
-5. Download elastix from https://github.com/SuperElastix/elastix/releases/tag/5.2.0 and unzip to a specified folder.
-6. Run the following bash commands:
     ```
     $ export PATH=/path/to/folder/elastix/bin:$PATH
     $ export LD_LIBRARY_PATH=/path/to/folder/elastix/lib:$LD_LIBRARY_PATH
     $ chmod +x /path/to/folder/elastix/bin/elastix
     ```
-7. Clone this repository to a specified folder and run this bash command:
+5. Clone this repository to a specified folder and run this bash command:
     ```
     $ export nnUNet_results="/path/to/folder/Basal-Ganglia-Segment/nnunet/models"
     ```
-9. Download the nnUNet models from https://campuscvut-my.sharepoint.com/:u:/g/personal/limatom1_cvut_cz/EU3QE9E1gIVFmWyLaOwOX0sB9_jRzA32GqJJ9Cl_FalVaw?e=SNG8au and https://campuscvut-my.sharepoint.com/:u:/g/personal/limatom1_cvut_cz/EZab_ICIPA1AgzYdkCiOgdUBAJtoo5-Cmqh6XhcyxpruJQ?e=84FQ3H to a specified folder.
-10. Open a terminal in the folder with the cloned Basal-Ganglia-Segment repository and run the following bash commands:
+6. Download the nnUNet models from https://campuscvut-my.sharepoint.com/:u:/g/personal/limatom1_cvut_cz/EU3QE9E1gIVFmWyLaOwOX0sB9_jRzA32GqJJ9Cl_FalVaw?e=SNG8au and https://campuscvut-my.sharepoint.com/:u:/g/personal/limatom1_cvut_cz/EZab_ICIPA1AgzYdkCiOgdUBAJtoo5-Cmqh6XhcyxpruJQ?e=84FQ3H to a specified folder.
+7. Open a terminal in the folder with the cloned Basal-Ganglia-Segment repository and run the following bash commands:
     ```
     $ python install_model.py /path/to/downloaded/models/folder/method_I.zip
     $ python install_model.py /path/to/downloaded/models/folder/method_II.zip
@@ -63,3 +57,5 @@ The segmentation results are stored in the results/ folder as **method_I_output_
 [2] Pauli, Wolfgang M., Amanda N. Nili, and J. Michael Tyszka. "A high-resolution probabilistic in vivo atlas of human subcortical brain nuclei." Scientific data 5.1 (2018): 1-13.
 
 [3] Klein, Stefan, et al. "Elastix: a toolbox for intensity-based medical image registration." IEEE transactions on medical imaging 29.1 (2009): 196-205.
+
+[4] Hoopes, Andrew, et al. "SynthStrip: skull-stripping for any brain image." NeuroImage 260 (2022): 119474.
