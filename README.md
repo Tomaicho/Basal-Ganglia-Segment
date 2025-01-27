@@ -24,7 +24,6 @@ where the -t1 and -t2 arguments must be the absolute paths to the T1 and T2 imag
     - SimpleITK
 
 ### Downloadable packages:
-    - Synthstrip 
     - FreeSurfer
     - Elastix
 
