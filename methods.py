@@ -4,7 +4,7 @@ Makes use of the functions in the utils.py file to pre-process the input images,
 """
 
 import os
-from Image_processing.utils import *
+from utils import *
 
 MNI_TEMPLATE = "data/templates/skull_stripped_mni_icbm152_t1_tal_nlin_asym_09b_hires.nii.gz"
 ATLAS_ROI = "data/templates/ROI_CIT168_atlas.nii.gz"
@@ -56,11 +56,10 @@ def method_II_segment(t1_image, t2_image):
     print("\nImages preprocessed and cropped using the transformed ROI mask.\n")
 
     # Perform the segmentation of the images stored in the folder preprocessed folder
-    # Output is stored in /results
-    print('\nnnUNetv2_predict -i tmp/preprocessed_method_II/ -o results/ -d 002 -c 3d_fullres -f 5 --save_probabilities -tr nnUNetTrainer_250epochs_NoMirroring -p nnUNetResEncUNetLPlans\n')
-    os.system('nnUNetv2_predict -i tmp/preprocessed_method_II/ -o results/ -d 002 -c 3d_fullres -f 5 --save_probabilities -tr nnUNetTrainer_250epochs_NoMirroring -p nnUNetResEncUNetLPlans')
+    # Output is stored in tmp/results
+    os.system('nnUNetv2_predict -i tmp/preprocessed_method_II/ -o tmp/results/ -d 002 -c 3d_fullres -f 5 --save_probabilities -tr nnUNetTrainer_250epochs_NoMirroring -p nnUNetResEncUNetLPlans')
 
-    os.rename(os.path.join('results', 'LOCALIZER_001.nii.gz'), os.path.join('results', 'method_II_output_in_native.nii.gz'))
+    os.rename(os.path.join('tmp', 'results', 'LOCALIZER_001.nii.gz'), os.path.join('results', 'method_II_output_in_native.nii.gz'))
     print("Segmentation completed and stored in results/ folder as method_II_output_in_native.nii.gz")
 
 
@@ -113,8 +112,8 @@ def method_I_segment(t1_image, t2_image):
     print("\nImages preprocessed and cropped.\n")
 
     # Perform the segmentation of the images stored in the folder preprocessed folder
-    # Output is stored in /results
-    os.system('nnUNetv2_predict -i tmp/preprocessed_method_I/ -o results/ -d 003 -c 3d_fullres -f 5 --save_probabilities -tr nnUNetTrainer_100epochs_NoMirroring -p nnUNetResEncUNetLPlans')
+    # Output is stored in tmp/results
+    os.system('nnUNetv2_predict -i tmp/preprocessed_method_I/ -o tmp/results/ -d 003 -c 3d_fullres -f 5 --save_probabilities -tr nnUNetTrainer_100epochs_NoMirroring -p nnUNetResEncUNetLPlans')
 
     # Compute inverse transformation from MNI to native space
     register_images(fixed_image=MNI_TEMPLATE, moving_image=MNI_TEMPLATE, output_dir=os.path.join("tmp", "invert_t1_to_MNI_transform"), parameters_file="data/templates/Par0064_affine_invert.txt", invert=True)
@@ -127,5 +126,6 @@ def method_I_segment(t1_image, t2_image):
     
     # Move the tmp/invert_t1_to_MNI_transform/result.nii.gz file to the results folder as 0.5_MNI_001.nii.gz
     os.rename(os.path.join('tmp', 'invert_t1_to_MNI_transform', 'result.nii.gz'), os.path.join('results', 'method_I_output_in_native.nii.gz'))
-    os.rename(os.path.join('results', '0.5_MNI_001.nii.gz'), os.path.join('results', 'method_I_output_in_MNI.nii.gz'))
-    print("Segmentation completed and stored in results/ folder as method_I_output_in_native.nii.gz")
+    os.rename(os.path.join('tmp', 'results', '0.5_MNI_001.nii.gz'), os.path.join('results', 'method_I_output_in_MNI.nii.gz'))
+    print("Segmentation completed and stored in results/ folder as method_I_output_in_native.nii.gz\n")
+    print("Segmentation in MNI space is stored as method_I_output_in_MNI.nii.gz")

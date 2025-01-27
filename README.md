@@ -16,6 +16,8 @@ Open a terminal in this project folder and run the following command:
 
 where the -t1 and -t2 arguments must be the absolute paths to the T1 and T2 images, respectively, and -m must be the method selected for the segmentation task, either I or II.
 
+The segmentation results are stored in the results/ folder as **method_I_output_in_native.nii.gz** and **method_II_output_in_native.nii.gz** for methods I and II, respectively. The segmentation of method I in the MNI space is also provided as **method_I_output_in_MNI.nii.gz**. nnUNet raw output is stored in the tmp/results/ folder.
+
 ## Dependencies
 ### Pip installations:
     - Torch
