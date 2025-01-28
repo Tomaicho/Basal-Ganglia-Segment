@@ -38,7 +38,7 @@ def skull_strip(input_image, t1):
         output_image = os.path.join("tmp", "t1_ss.nii.gz")
     else:
         output_image = os.path.join("tmp", "t2_ss.nii.gz")
-    cmd = f"mri-synthstrip -i {input_image} -o {output_image}"
+    cmd = f"mri_synthstrip -i {input_image} -o {output_image}"
     subprocess.run(cmd, shell=True)
 
 
