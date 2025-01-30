@@ -11,7 +11,7 @@ os.environ['nnUNet_preprocessed'] = os.path.join(pwd, "nnunet", "preprocessed")
 os.environ['nnUNet_results'] = os.path.join(pwd, "nnunet", "models")
 
 # Export the paths of the nnuNet folders in terminal
-subprocess.run("eval $(python nnunet_paths.py)")
+subprocess.run("eval $(python nnunet_paths.py)", shell=True)
 
 if len(sys.argv) != 2:
     print("Usage: python install_model.py /path/to/model.zip")
