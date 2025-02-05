@@ -1,6 +1,5 @@
 import os
 import sys
-import subprocess
 from nnunetv2.model_sharing.model_import import install_model_from_zip_file
 
 pwd = os.path.dirname(os.path.abspath(__file__))
@@ -12,7 +11,7 @@ os.environ['nnUNet_results'] = os.path.join(pwd, "nnunet", "models")
 
 # Export the paths of the nnuNet folders in terminal
 #subprocess.run("eval $(python nnunet_paths.py)", shell=True)
-os.system("eval $(python nnunet_paths.py)")
+#os.system("eval $(python nnunet_paths.py)")
 
 if len(sys.argv) != 2:
     print("Usage: python install_model.py /path/to/model.zip")
