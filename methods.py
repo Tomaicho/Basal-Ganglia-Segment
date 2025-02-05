@@ -9,6 +9,8 @@ from utils import *
 MNI_TEMPLATE = "data/templates/skull_stripped_mni_icbm152_t1_tal_nlin_asym_09b_hires.nii.gz"
 ATLAS_ROI = "data/templates/ROI_CIT168_atlas.nii.gz"
 
+pwd = os.path.dirname(os.path.abspath(__file__))
+
 def method_II_segment(t1_image, t2_image):
     """Performs the segmentation of the STN, RN and SN of a subject using the method II.
 
@@ -56,8 +58,9 @@ def method_II_segment(t1_image, t2_image):
     print("\nImages preprocessed and cropped using the transformed ROI mask.\n")
 
     # Perform the segmentation of the images stored in the folder preprocessed folder
+    nnunet_results = (os.path.join(pwd, "nnunet", "models"))
     # Output is stored in tmp/results
-    os.system('nnUNetv2_predict -i tmp/preprocessed_method_II/ -o tmp/results/ -d 002 -c 3d_fullres -f 5 --save_probabilities -tr nnUNetTrainer_250epochs_NoMirroring -p nnUNetResEncUNetLPlans')
+    os.system(f'nnUNet_results="{nnunet_results}" nnUNetv2_predict -i tmp/preprocessed_method_II/ -o tmp/results/ -d 002 -c 3d_fullres -f 5 --save_probabilities -tr nnUNetTrainer_250epochs_NoMirroring -p nnUNetResEncUNetLPlans')
 
     os.rename(os.path.join('tmp', 'results', 'LOCALIZER_001.nii.gz'), os.path.join('results', 'method_II_output_in_native.nii.gz'))
     print("Segmentation completed and stored in results/ folder as method_II_output_in_native.nii.gz")
