@@ -9,14 +9,8 @@ A repository containing two automatic segmentation methods of basal ganglia nucl
 
 ![alt text](https://github.com/Tomaicho/Basal-Ganglia-Segment/blob/main/documentation/Method_II_pipeline.png?raw=true)
 
-## Usage
-Open a terminal in this project folder and run the following command:
-
-```$ python basal_ganglia_segment.py -t1 path/to/t1/image.nii.gz -t2 path/to/t2/image.nii.gz -m [I, II]```
-
-where the -t1 and -t2 arguments must be the absolute paths to the T1 and T2 images, respectively, and -m must be the method selected for the segmentation task, either I or II.
-
-The segmentation results are stored in the results/ folder as **method_I_output_in_native.nii.gz** and **method_II_output_in_native.nii.gz** for methods I and II, respectively. The segmentation of method I in the MNI space is also provided as **method_I_output_in_MNI.nii.gz**. nnUNet raw output is stored in the tmp/results/ folder.
+## Prerequisites
+You need to have a machine with Python > 3.8 and any Bash based shell installed.
 
 ## Dependencies
 ### Pip installations:
@@ -50,7 +44,31 @@ The segmentation results are stored in the results/ folder as **method_I_output_
     ```
     $ python install_model.py /path/to/downloaded/models/folder/method_I.zip
     $ python install_model.py /path/to/downloaded/models/folder/method_II.zip
+
     ```
+
+## Usage
+Open a terminal in this project folder and run the following command:
+
+```$ python basal_ganglia_segment.py -t1 path/to/t1/image.nii.gz -t2 path/to/t2/image.nii.gz -m [I, II]```
+
+where the -t1 and -t2 arguments must be the absolute paths to the T1 and T2 images, respectively, and -m must be the method selected for the segmentation task, either I or II.
+
+```
+$ python basal_ganglia_segment.py -h
+usage: basal_ganglia_segment.py [-h] -t1 T1 -t2 T2 -m {I,II}
+
+Performs segmentation of the STN, RN and SN of subject given its T1w and T2w brain MRI scans.
+
+options:
+  -h, --help  show this help message and exit
+  -t1 T1      Path to the T1-weighted MRI image of the subject.
+  -t2 T2      Path to the T2-weighted MRI image of the subject.
+  -m {I,II}   Method to be used on the segmentation (I -> MNI, II -> native).
+```
+
+The segmentation results are stored in the results/ folder as **method_I_output_in_native.nii.gz** and **method_II_output_in_native.nii.gz** for methods I and II, respectively. The segmentation of method I in the MNI space is also provided as **method_I_output_in_MNI.nii.gz**. nnUNet raw output is stored in the tmp/results/ folder.
+
 
 ## References
 
