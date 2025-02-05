@@ -45,7 +45,7 @@ The segmentation results are stored in the results/ folder as **method_I_output_
     $ export LD_LIBRARY_PATH=/path/to/folder/elastix/lib:$LD_LIBRARY_PATH
     $ chmod +x /path/to/folder/elastix/bin/elastix
     ```
-7. Download the nnUNet models: [method I](https://campuscvut-my.sharepoint.com/:u:/g/personal/limatom1_cvut_cz/EY-K6rFyHkBJt0DeAuW3KDgB6Kh28pa_LeTXo9Pc0oPRYQ?e=wccjkA) and [method II](https://campuscvut-my.sharepoint.com/:u:/g/personal/limatom1_cvut_cz/ERW2JmN3zXBGoodVaAMwQ9oBpMZ048AZCd5shO8cOvmukA?e=bjbOhE) to a specified folder.
+7. Download the nnUNet models: [method I](https://campuscvut-my.sharepoint.com/:u:/g/personal/limatom1_cvut_cz/ETUBoVLkScxCpll3rY8cH9EBRx4rpId15ncHspdSQw3Feg?e=aPP7DO) and [method II](https://campuscvut-my.sharepoint.com/:u:/g/personal/limatom1_cvut_cz/EdqE2SUC-9lJl9q_-LeWSmYBG4SCQytict7hffJ6YK2P4A?e=kRHeMe) to a specified folder.
 8. Open a terminal in the folder with the cloned Basal-Ganglia-Segment repository and run the following bash commands:
     ```
     $ python install_model.py /path/to/downloaded/models/folder/method_I.zip

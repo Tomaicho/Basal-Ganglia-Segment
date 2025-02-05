@@ -115,8 +115,9 @@ def method_I_segment(t1_image, t2_image):
     print("\nImages preprocessed and cropped.\n")
 
     # Perform the segmentation of the images stored in the folder preprocessed folder
+    nnunet_results = (os.path.join(pwd, "nnunet", "models"))
     # Output is stored in tmp/results
-    os.system('nnUNetv2_predict -i tmp/preprocessed_method_I/ -o tmp/results/ -d 003 -c 3d_fullres -f 5 --save_probabilities -tr nnUNetTrainer_100epochs_NoMirroring -p nnUNetResEncUNetLPlans')
+    os.system(f'nnUNet_results="{nnunet_results}" nnUNetv2_predict -i tmp/preprocessed_method_I/ -o tmp/results/ -d 003 -c 3d_fullres -f 5 --save_probabilities -tr nnUNetTrainer_250epochs_NoMirroring -p nnUNetResEncUNetLPlans')
 
     # Compute inverse transformation from MNI to native space
     register_images(fixed_image=MNI_TEMPLATE, moving_image=MNI_TEMPLATE, output_dir=os.path.join("tmp", "invert_t1_to_MNI_transform"), parameters_file="data/templates/Par0064_affine_invert.txt", invert=True)
