@@ -39,7 +39,7 @@ def skull_strip(input_image, t1):
     else:
         output_image = os.path.join("tmp", "t2_ss.nii.gz")
     cmd = f"mri_synthstrip -i {input_image} -o {output_image}"
-    subprocess.run(cmd, shell=False)
+    subprocess.run(cmd, shell=True)
 
 
 def register_images(fixed_image, moving_image, output_dir, parameters_file, invert=False):
@@ -74,7 +74,7 @@ def register_images(fixed_image, moving_image, output_dir, parameters_file, inve
         cmd = f"elastix -f {fixed_image} -m {moving_image} -out {output_dir} -p {parameters_file} -t0 {os.path.join('tmp', 't1_to_MNI_transform', 'TransformParameters.0.txt')}"
     else:
         cmd = f"elastix -f {fixed_image} -m {moving_image} -out {output_dir} -p {parameters_file}"
-    subprocess.run(cmd, shell=False)
+    subprocess.run(cmd, shell=True)
 
 
 def apply_transform_to_image(input_image, transform, output_dir):
@@ -100,7 +100,7 @@ def apply_transform_to_image(input_image, transform, output_dir):
         raise FileNotFoundError(f"Transform file {transform} not found.")
     # save the output in a folder in the tmp folder
     cmd = f"transformix -in {input_image} -out {output_dir} -tp {transform}"
-    subprocess.run(cmd, shell=False)
+    subprocess.run(cmd, shell=True)
 
 def change_parameters_file_for_labels(path_to_parameters_file_folder):
     """"Function to change the Interpolation Order parameter of the elastix parameters file to 0 to make it aplicable to binary label images.
