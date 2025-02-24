@@ -5,6 +5,13 @@ import argparse
 
 from methods import *
 
+pwd = os.path.dirname(os.path.abspath(__file__))
+
+# Define nnUNet paths
+os.environ['nnUNet_raw'] = os.path.join(pwd, "nnunet", "raw")
+os.environ['nnUNet_preprocessed'] = os.path.join(pwd, "nnunet", "preprocessed")
+os.environ['nnUNet_results'] = os.path.join(pwd, "nnunet", "models")
+
 
 parser = argparse.ArgumentParser(
                     description='Performs segmentation of the STN, RN and SN of subject given its T1w and T2w brain MRI scans.')

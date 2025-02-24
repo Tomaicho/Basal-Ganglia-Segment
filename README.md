@@ -1,6 +1,16 @@
 # Basal-Ganglia-Segment
 A repository containing two automatic segmentation methods of basal ganglia nuclei in MRI data. The methods trained for 7T and 3T field intensities are described in [.........] and perform segmentation of the Subthalamic Nucleus (STN), Substantia Nigra (SN) and Red Nucleus (RN).
 
+## Study Description
+### Data
+The data used in this study consisted solely on publicly available datasets, focusing on ultra-high-field 7T MRI. Lower-field 3T data was used for adaptability evaluation of the trained methods to clinical data. The datasets from where data was collected are listed below:
+    - [Open Science CBS](https://www.nitrc.org/frs/?group_id=606)
+    - [ATAG](https://www.nitrc.org/projects/atag_mri_scans/)
+    - [3T/7T Paired Dataset](https://doi.org/10.6084/m9.figshare.c.6485272.v1)
+    - [OASIS](https://sites.wustl.edu/oasisbrains/)
+
+
+### Methods
 **Method I** performs the segmentation by relying on the MNI152 brain template to spatially normalize the images. The segmentation is performed in the template space, and the output masks are transformed back to the native space.
 
 ![alt text](https://github.com/Tomaicho/Basal-Ganglia-Segment/blob/main/documentation/Method_I_pipeline.png?raw=true)
@@ -17,7 +27,6 @@ You need to have a machine with Python > 3.8 and any Bash based shell installed.
     - Torch
     - Torchio
     - nnUNetv2
-    - nipreps-synthstrip
 
 ### Downloadable packages:
     - FreeSurfer
