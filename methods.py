@@ -63,7 +63,7 @@ def method_II_segment(t1_image, t2_image):
     os.system(f'nnUNetv2_predict -i tmp/preprocessed_method_II/ -o tmp/results/ -d 002 -c 3d_fullres -f 5 --save_probabilities -tr nnUNetTrainer_250epochs_NoMirroring -p nnUNetResEncUNetLPlans')
 
     # Create the results folder if it does not exist
-    if not os.path.exists(os.path("results")):
+    if not os.path.exists("results"):
         os.makedirs(os.path("results"))
 
     os.rename(os.path.join('tmp', 'results', 'LOCALIZER_001.nii.gz'), os.path.join('results', 'method_II_output_in_native.nii.gz'))
@@ -133,7 +133,7 @@ def method_I_segment(t1_image, t2_image):
     apply_transform_to_image(input_image=os.path.join("tmp", "results", "0.5_MNI_001.nii.gz"), transform=os.path.join('tmp', 'invert_t1_to_MNI_transform', 'TransformParameters.0.labels_MNI_to_T1.txt'), output_dir=os.path.join('tmp', 'invert_t1_to_MNI_transform'))
 
     # Create the results folder if it does not exist
-    if not os.path.exists(os.path("results")):
+    if not os.path.exists("results"):
         os.makedirs(os.path("results"))
     
     # Move the tmp/invert_t1_to_MNI_transform/result.nii.gz file to the results folder as 0.5_MNI_001.nii.gz
