@@ -64,7 +64,7 @@ def method_II_segment(t1_image, t2_image):
 
     # Create the results folder if it does not exist
     if not os.path.exists("results"):
-        os.makedirs(os.path("results"))
+        os.makedirs("results")
 
     os.rename(os.path.join('tmp', 'results', 'LOCALIZER_001.nii.gz'), os.path.join('results', 'method_II_output_in_native.nii.gz'))
     print("Segmentation completed and stored in results/ folder as method_II_output_in_native.nii.gz")
@@ -134,7 +134,7 @@ def method_I_segment(t1_image, t2_image):
 
     # Create the results folder if it does not exist
     if not os.path.exists("results"):
-        os.makedirs(os.path("results"))
+        os.makedirs("results")
     
     # Move the tmp/invert_t1_to_MNI_transform/result.nii.gz file to the results folder as 0.5_MNI_001.nii.gz
     os.rename(os.path.join('tmp', 'invert_t1_to_MNI_transform', 'result.nii.gz'), os.path.join('results', 'method_I_output_in_native.nii.gz'))
