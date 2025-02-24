@@ -21,7 +21,7 @@ with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
         zip_ref.extractall(os.path.join(pwd, "nnunet", "models"))
 
 new_class = """
-class nnUNetTrainer_8000epochs_NoMirroring(nnUNetTrainer):
+class nnUNetTrainer_100epochs_NoMirroring(nnUNetTrainer):
     def __init__(self, plans: dict, configuration: str, fold: int, dataset_json: dict, unpack_dataset: bool = True,
                  device: torch.device = torch.device('cuda')):
         super().__init__(plans, configuration, fold, dataset_json, unpack_dataset, device)
